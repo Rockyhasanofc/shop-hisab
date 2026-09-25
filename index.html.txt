@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Professional হিসাব</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,"Noto Sans Bengali",sans-serif;
+background:#f2f2f2;
+padding:15px;
+margin:0;
+color:#222;
+}
+
+.header{
+text-align:center;
+margin-bottom:15px;
+}
+
+.bismillah{
+font-size:22px;
+font-weight:bold;
+line-height:1.8;
+}
+
+.shop-title{
+font-size:24px;
+font-weight:bold;
+margin:5px 0;
+}
+
+.container{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
+}
+
+.box{
+background:#fff;
+padding:15px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.15);
+width:300px;
+}
+
+.box h3{
+margin-top:0;
+border-bottom:1px solid #ddd;
+padding-bottom:8px;
+}
+
+input,select{
+width:150px;
+padding:8px;
+margin:4px 0;
+border:1px solid #bbb;
+border-radius:5px;
+font-size:15px;
+}
+
+button{
+padding:8px 13px;
+margin:4px 2px;
+border:0;
+border-radius:5px;
+cursor:pointer;
+font-weight:bold;
+background:#333;
+color:white;
+}
+
+button:hover{
+opacity:.85;
+}
+
+.reset-btn{
+background:#c62828;
+}
+
+.save-btn{
+background:#1976d2;
+}
+
+.share-btn{
+background:#008000;
+}
+
+.print-btn{
+background:#555;
+}
+
+.add-btn{
+background:#1976d2;
+}
+
+.buy-btn{
+background:#2e7d32;
+}
+
+.sell-btn{
+background:#d84315;
+}
+
+.total{
+font-weight:bold;
+font-size:17px;
+margin-top:8px;
+padding:5px 0;
+}
+
+.final-joma{
+text-align:center;
+font-size:27px;
+font-weight:bold;
+margin:20px 0;
+background:#fff;
+padding:15px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.profit-box{
+text-align:center;
+background:#fff;
+padding:12px;
+margin:15px auto;
+max-width:600px;
+border-radius:10px;
+}
+
+.history{
+max-height:300px;
+overflow:auto;
+}
+
+.history-item{
+background:#eee;
+padding:9px;
+margin:5px 0;
+border-radius:5px;
+cursor:pointer;
+}
+
+.history-item:hover{
+background:#ddd;
+}
+
+.expense-item{
+background:#f5f5f5;
+padding:6px;
+margin:4px 0;
+border-radius:4px;
+}
+
+.calc-row{
+display:flex;
+align-items:center;
+gap:5px;
+margin:5px 0;
+}
+
+.calc-row input{
+width:100px;
+}
+
+.card-result{
+background:#f5f5f5;
+padding:8px;
+margin-top:8px;
+border-radius:5px;
+}
+
+.stock-line{
+padding:4px 0;
+}
+
+hr{
+border:0;
+border-top:1px solid #ddd;
+margin:12px 0;
+}
+
+@media(max-width:600px){
+
+body{
+padding:8px;
+}
+
+.box{
+width:100%;
+}
+
+input,select{
+width:55%;
+}
+
+.bismillah{
+font-size:18px;
+}
+
+.shop-title{
+font-size:20px;
+}
+
+}
+
+@media print{
+
+button,
+.history-box,
+.calculator-box{
+display:none !important;
+}
+
+body{
+background:white;
+padding:0;
+}
+
+.box{
+box-shadow:none;
+border:1px solid #ddd;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="bismillah">
+بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+<br>
+বিসমিল্লাহির রাহমানির রাহিম
+</div>
+
+<div class="shop-title">
+ART COMPUTER
+</div>
+
+<h2>দৈনিক হিসাব</h2>
+
+তারিখ:
+<input type="date" id="date">
+
+</div>
+
+
+<div class="container">
+
+
+<!-- ================= আয় ================= -->
+
+<div class="box">
+
+<h3>💰 আয়</h3>
+
+ক্যাশ
+<input type="number" id="cash" oninput="hisab()">
+<br>
+
+বিকাশ
+<input type="number" id="bkash" oninput="hisab()">
+<br>
+
+নগদ
+<input type="number" id="nogod" oninput="hisab()">
+<br>
+
+রকেট
+<input type="number" id="rocket" oninput="hisab()">
+<br>
+
+গ্রামীণফোন
+<input type="number" id="gp" oninput="hisab()">
+<br>
+
+এয়ারটেল
+<input type="number" id="airtel" oninput="hisab()">
+<br>
+
+রবি
+<input type="number" id="robi" oninput="hisab()">
+<br>
+
+বাংলালিংক
+<input type="number" id="bl" oninput="hisab()">
+<br>
+
+মোট কার্ড
+<input type="number" id="card" oninput="hisab()">
+<br>
+
+বাকি
+<input type="number" id="baki" oninput="hisab()">
+
+<div class="total">
+মোট: <span id="mot">0</span> টাকা
+</div>
+
+কমিশন (-)
+<input type="number" id="commission" oninput="hisab()">
+
+<div class="total">
+কমিশন বাদে:
+<span id="incomeTotal">0</span> টাকা
+</div>
+
+<button class="reset-btn" onclick="resetIncome()">
+Reset
+</button>
+
+</div>
+
+
+<!-- ================= PERSONAL ================= -->
+
+<div class="box">
+
+<h3>👤 Personal লেনদেন</h3>
+
+Personal bKash
+<input type="number" id="pbkash" oninput="hisab()">
+<br>
+
+Personal Rocket
+<input type="number" id="procket" oninput="hisab()">
+
+<div class="total">
+মোট Personal:
+<span id="personalTotal">0</span>
+</div>
+
+চার্জ (প্রতি ১০০০ এ ৯ টাকা):
+
+<span id="charge">0</span> টাকা
+
+<div class="total">
+অবশিষ্ট:
+<span id="personalRemain">0</span> টাকা
+</div>
+
+<button class="reset-btn" onclick="resetPersonal()">
+Reset
+</button>
+
+</div>
+
+
+<!-- ================= STOCK ================= -->
+
+<div class="box">
+
+<h3>📦 SIM & KIT Stock</h3>
+
+<select id="simtype">
+<option value="Robi">Robi</option>
+<option value="Airtel">Airtel</option>
+<option value="Grameen">Grameen</option>
+<option value="Banglalink">Banglalink</option>
+</select>
+
+<br>
+
+Quantity
+<input type="number" id="stockqty" min="0">
+
+<br>
+
+SIM Price
+<input type="number" id="simprice" min="0">
+
+<br>
+
+<button class="buy-btn" onclick="buySim()">
+SIM Buy
+</button>
+
+<button class="sell-btn" onclick="sellSim()">
+SIM Sell
+</button>
+
+<hr>
+
+KIT Quantity
+<input type="number" id="kitqty" min="0">
+
+<br>
+
+KIT Price
+<input type="number" id="kitprice" min="0">
+
+<br>
+
+<button class="buy-btn" onclick="buyKit()">
+KIT Buy
+</button>
+
+<button class="sell-btn" onclick="sellKit()">
+KIT Sell
+</button>
+
+<hr>
+
+<div class="stock-line">
+Robi SIM:
+<span id="robiSim">0</span>
+</div>
+
+<div class="stock-line">
+Airtel SIM:
+<span id="airtelSim">0</span>
+</div>
+
+<div class="stock-line">
+Grameen SIM:
+<span id="gpSim">0</span>
+</div>
+
+<div class="stock-line">
+Banglalink SIM:
+<span id="blSim">0</span>
+</div>
+
+<div class="stock-line">
+SIM KIT:
+<span id="kitStock">0</span>
+</div>
+
+<div class="total">
+বর্তমান Stock Value:
+<span id="stockValue">0</span> টাকা
+</div>
+
+<button class="reset-btn" onclick="resetStock()">
+Reset Stock
+</button>
+
+</div>
+
+
+<!-- ================= খরচ ================= -->
+
+<div class="box">
+
+<h3>💸 খরচ</h3>
+
+কারণ / Reason
+
+<input type="text" id="expReason"
+placeholder="যেমন: চা, যাতায়াত">
+
+<br>
+
+Amount
+
+<input type="number" id="expAmount">
+
+<br>
+
+<button class="add-btn" onclick="addExpense()">
+Add
+</button>
+
+<hr>
+
+<div id="expenseList"></div>
+
+<div class="total">
+মোট খরচ:
+<span id="expenseTotal">0</span> টাকা
+</div>
+
+<small>
+⚠️ এই খরচ জমা থেকে যোগ/বিয়োগ হবে না।
+শুধু আলাদাভাবে দেখাবে।
+</small>
+
+<br>
+
+<button class="reset-btn" onclick="resetExpense()">
+Reset
+</button>
+
+</div>
+
+
+<!-- ================= CARD হিসাব ================= -->
+
+<div class="box calculator-box">
+
+<h3>💳 Card </h3>
+
+<div class="calc-row">
+20 টাকার Card
+<input type="number" id="card20" min="0" value="0"
+oninput="cardCalc()">
+</div>
+
+<div class="calc-row">
+30 টাকার Card
+<input type="number" id="card30" min="0" value="0"
+oninput="cardCalc()">
+</div>
+
+<div class="calc-row">
+40 টাকার Card
+<input type="number" id="card40" min="0" value="0"
+oninput="cardCalc()">
+</div>
+
+<div class="calc-row">
+50 টাকার Card
+<input type="number" id="card50" min="0" value="0"
+oninput="cardCalc()">
+</div>
+
+<div class="card-result">
+
+20 টাকা:
+<span id="card20Total">0</span> টাকা
+
+<br>
+
+30 টাকা:
+<span id="card30Total">0</span> টাকা
+
+<br>
+
+40 টাকা:
+<span id="card40Total">0</span> টাকা
+
+<br>
+
+50 টাকা:
+<span id="card50Total">0</span> টাকা
+
+<hr>
+
+মোট Card:
+<span id="totalCardQty">0</span> টি
+
+<br>
+
+<strong>
+মোট Card-এর টাকা:
+<span id="totalCardMoney">0</span> টাকা
+</strong>
+
+</div>
+
+<br>
+
+<button class="reset-btn" onclick="resetCardCalc()">
+Reset
+</button>
+
+</div>
+
+
+<!-- ================= সহজ টাকা গোনা ================= -->
+
+<div class="box calculator-box">
+
+<h3>🧮 টাকা </h3>
+
+<div class="calc-row">
+2 টাকা
+<input type="number" id="money2" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="calc-row">
+5 টাকা
+<input type="number" id="money5" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="calc-row">
+10 টাকা
+<input type="number" id="money10" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="calc-row">
+20 টাকা
+<input type="number" id="money20" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="calc-row">
+50 টাকা
+<input type="number" id="money50" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="calc-row">
+100 টাকা
+<input type="number" id="money100" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="calc-row">
+200 টাকা
+<input type="number" id="money200" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="calc-row">
+500 টাকা
+<input type="number" id="money500" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="calc-row">
+1000 টাকা
+<input type="number" id="money1000" min="0" value="0"
+oninput="moneyCalc()">
+</div>
+
+<div class="total">
+মোট টাকা:
+<span id="moneyTotal">0</span>
+</div>
+
+<button class="reset-btn" onclick="resetMoneyCalc()">
+Reset
+</button>
+
+</div>
+
+
+<!-- ================= HISTORY ================= -->
+
+<div class="box history-box">
+
+<h3>📅 Daily History</h3>
+
+<div id="history" class="history"></div>
+
+<br>
+
+<button class="reset-btn" onclick="resetHistory()">
+Reset History
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= FINAL ================= -->
+
+<div class="final-joma">
+
+জমা:
+<span id="joma">0</span> টাকা
+
+</div>
+
+
+<div class="profit-box">
+
+<h3>
+📈 আজকের Profit:
+<span id="profitToday">0</span> টাকা
+</h3>
+
+<h3>
+📊 Commission Profit:
+<span id="commissionProfit">0</span> টাকা
+</h3>
+
+</div>
+
+
+<!-- ================= MAIN BUTTONS ================= -->
+
+<div style="text-align:center">
+
+<button class="save-btn" onclick="saveData()">
+💾 Save
+</button>
+
+<button class="print-btn" onclick="printPage()">
+🖨 Print
+</button>
+
+<button class="share-btn" onclick="shareHisab()">
+📤 Share
+</button>
+
+<button class="reset-btn" onclick="resetAll()">
+🔄 Reset All
+</button>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   BASIC HELPER
+===================================================== */
+
+function val(id){
+
+let el=document.getElementById(id);
+
+if(!el) return 0;
+
+return Number(el.value)||0;
+
+}
+
+
+/* =====================================================
+   STOCK DATA
+===================================================== */
+
+let simStock={
+Robi:{qty:0,value:0},
+Airtel:{qty:0,value:0},
+Grameen:{qty:0,value:0},
+Banglalink:{qty:0,value:0}
+};
+
+let kitStock={
+qty:0,
+value:0
+};
+
+
+/* =====================================================
+   EXPENSE
+===================================================== */
+
+let expenses=[];
+
+
+/* =====================================================
+   MAIN হিসাব
+===================================================== */
+
+function hisab(){
+
+let mot=
+
+val("cash")+
+val("bkash")+
+val("nogod")+
+val("rocket")+
+val("gp")+
+val("airtel")+
+val("robi")+
+val("bl")+
+val("card")+
+val("baki");
+
+document.getElementById("mot").innerText=mot;
+
+
+let commission=val("commission");
+
+let incomeTotal=mot-commission;
+
+document.getElementById("incomeTotal").innerText=
+incomeTotal.toFixed(2);
+
+
+/* PERSONAL */
+
+let personalTotal=
+val("pbkash")+
+val("procket");
+
+document.getElementById("personalTotal").innerText=
+personalTotal.toFixed(2);
+
+
+let charge=(personalTotal/1000)*9;
+
+document.getElementById("charge").innerText=
+charge.toFixed(2);
+
+
+let personalRemain=
+personalTotal-charge;
+
+document.getElementById("personalRemain").innerText=
+personalRemain.toFixed(2);
+
+
+/* STOCK VALUE */
+
+let stockValue=getStockValue();
+
+document.getElementById("stockValue").innerText=
+stockValue.toFixed(2);
+
+
+/*
+খরচ এখানে ব্যবহার করা হচ্ছে না।
+কারণ user চেয়েছে খরচ শুধু দেখাবে।
+*/
+
+
+/* FINAL JOMA */
+
+let joma=
+incomeTotal+
+personalRemain+
+stockValue;
+
+document.getElementById("joma").innerText=
+joma.toFixed(2);
+
+}
+
+
+/* =====================================================
+   STOCK VALUE
+===================================================== */
+
+function getStockValue(){
+
+let total=0;
+
+Object.keys(simStock).forEach(type=>{
+total+=simStock[type].value;
+});
+
+total+=kitStock.value;
+
+return total;
+
+}
+
+
+/* =====================================================
+   SIM BUY
+===================================================== */
+
+function buySim(){
+
+let type=document.getElementById("simtype").value;
+
+let qty=
+Number(document.getElementById("stockqty").value)||0;
+
+let price=
+Number(document.getElementById("simprice").value)||0;
+
+if(qty<=0){
+alert("SIM Quantity দিন");
+return;
+}
+
+if(price<=0){
+alert("SIM Price দিন");
+return;
+}
+
+simStock[type].qty+=qty;
+
+simStock[type].value+=qty*price;
+
+showStock();
+
+hisab();
+
+}
+
+
+/* =====================================================
+   SIM SELL
+===================================================== */
+
+function sellSim(){
+
+let type=document.getElementById("simtype").value;
+
+let qty=
+Number(document.getElementById("stockqty").value)||0;
+
+if(qty<=0){
+alert("SIM Quantity দিন");
+return;
+}
+
+if(simStock[type].qty<qty){
+alert("এই SIM-এর Stock কম আছে");
+return;
+}
+
+
+/*
+Weighted average cost
+*/
+
+let avg=
+simStock[type].value/
+simStock[type].qty;
+
+simStock[type].qty-=qty;
+
+simStock[type].value-=avg*qty;
+
+if(simStock[type].qty<=0){
+
+simStock[type].qty=0;
+simStock[type].value=0;
+
+}
+
+showStock();
+
+hisab();
+
+}
+
+
+/* =====================================================
+   KIT BUY
+===================================================== */
+
+function buyKit(){
+
+let qty=
+Number(document.getElementById("kitqty").value)||0;
+
+let price=
+Number(document.getElementById("kitprice").value)||0;
+
+if(qty<=0){
+alert("KIT Quantity দিন");
+return;
+}
+
+if(price<=0){
+alert("KIT Price দিন");
+return;
+}
+
+kitStock.qty+=qty;
+
+kitStock.value+=qty*price;
+
+showStock();
+
+hisab();
+
+}
+
+
+/* =====================================================
+   KIT SELL
+===================================================== */
+
+function sellKit(){
+
+let qty=
+Number(document.getElementById("kitqty").value)||0;
+
+if(qty<=0){
+alert("KIT Quantity দিন");
+return;
+}
+
+if(kitStock.qty<qty){
+alert("KIT Stock কম আছে");
+return;
+}
+
+let avg=
+kitStock.value/
+kitStock.qty;
+
+kitStock.qty-=qty;
+
+kitStock.value-=avg*qty;
+
+if(kitStock.qty<=0){
+
+kitStock.qty=0;
+kitStock.value=0;
+
+}
+
+showStock();
+
+hisab();
+
+}
+
+
+/* =====================================================
+   SHOW STOCK
+===================================================== */
+
+function showStock(){
+
+document.getElementById("robiSim").innerText=
+simStock.Robi.qty;
+
+document.getElementById("airtelSim").innerText=
+simStock.Airtel.qty;
+
+document.getElementById("gpSim").innerText=
+simStock.Grameen.qty;
+
+document.getElementById("blSim").innerText=
+simStock.Banglalink.qty;
+
+document.getElementById("kitStock").innerText=
+kitStock.qty;
+
+document.getElementById("stockValue").innerText=
+getStockValue().toFixed(2);
+
+}
+
+
+/* =====================================================
+   EXPENSE
+===================================================== */
+
+function addExpense(){
+
+let reason=
+document.getElementById("expReason").value.trim();
+
+let amount=
+Number(document.getElementById("expAmount").value)||0;
+
+if(!reason){
+alert("খরচের কারণ লিখুন");
+return;
+}
+
+if(amount<=0){
+alert("Amount দিন");
+return;
+}
+
+expenses.push({
+reason:reason,
+amount:amount
+});
+
+showExpense();
+
+document.getElementById("expReason").value="";
+document.getElementById("expAmount").value="";
+
+hisab();
+
+}
+
+
+function showExpense(){
+
+let list=
+document.getElementById("expenseList");
+
+list.innerHTML="";
+
+let total=0;
+
+expenses.forEach((e,index)=>{
+
+total+=Number(e.amount)||0;
+
+let div=
+document.createElement("div");
+
+div.className="expense-item";
+
+div.innerHTML=
+e.reason+" - "+Number(e.amount).toFixed(2)+" টাকা";
+
+list.appendChild(div);
+
+});
+
+document.getElementById("expenseTotal").innerText=
+total.toFixed(2);
+
+}
+
+
+/* =====================================================
+   CARD CALCULATOR
+   মূল হিসাবের সাথে কোনো সম্পর্ক নেই
+===================================================== */
+
+function cardCalc(){
+
+let c20=val("card20");
+let c30=val("card30");
+let c40=val("card40");
+let c50=val("card50");
+
+document.getElementById("card20Total").innerText=
+(c20*20).toFixed(2);
+
+document.getElementById("card30Total").innerText=
+(c30*30).toFixed(2);
+
+document.getElementById("card40Total").innerText=
+(c40*40).toFixed(2);
+
+document.getElementById("card50Total").innerText=
+(c50*50).toFixed(2);
+
+let qty=
+c20+c30+c40+c50;
+
+let money=
+(c20*20)+
+(c30*30)+
+(c40*40)+
+(c50*50);
+
+document.getElementById("totalCardQty").innerText=qty;
+
+document.getElementById("totalCardMoney").innerText=
+money.toFixed(2);
+
+}
+
+
+/* =====================================================
+   সহজ টাকা Calculator
+===================================================== */
+
+function moneyCalc(){
+
+let total=
+
+val("money2")*2+
+val("money5")*5+
+val("money10")*10+
+val("money20")*20+
+val("money50")*50+
+val("money100")*100+
+val("money200")*200+
+val("money500")*500+
+val("money1000")*1000;
+
+document.getElementById("moneyTotal").innerText=
+total.toFixed(2);
+
+}
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function saveData(){
+
+let date=
+document.getElementById("date").value;
+
+if(!date){
+
+alert("তারিখ দিন");
+
+return;
+
+}
+
+hisab();
+
+let currentJoma=
+Number(document.getElementById("joma").innerText)||0;
+
+let currentCommission=
+val("commission");
+
+
+/*
+আগের দিনের হিসাব বের করা
+শুধু current date-এর আগের date।
+*/
+
+let previous=
+getPreviousData(date);
+
+let previousJoma=
+previous ? Number(previous.joma)||0 : 0;
+
+let previousCommission=
+previous ? Number(previous.commission)||0 : 0;
+
+
+let profit=
+currentJoma-previousJoma;
+
+let commissionProfit=
+currentCommission-previousCommission;
+
+
+document.getElementById("profitToday").innerText=
+profit.toFixed(2);
+
+document.getElementById("commissionProfit").innerText=
+commissionProfit.toFixed(2);
+
+
+/* সব input */
+
+let inputs={};
+
+document.querySelectorAll("input").forEach(input=>{
+
+if(input.id){
+
+inputs[input.id]=input.value;
+
+}
+
+});
+
+
+let data={
+
+date:date,
+
+inputs:inputs,
+
+joma:currentJoma,
+
+commission:currentCommission,
+
+profitToday:profit,
+
+commissionProfit:commissionProfit,
+
+simStock:simStock,
+
+kitStock:kitStock,
+
+expenses:expenses
+
+};
+
+
+localStorage.setItem(
+"hisab_"+date,
+JSON.stringify(data)
+);
+
+loadHistory();
+
+alert("হিসাব Save হয়েছে");
+
+}
+
+
+/* =====================================================
+   PREVIOUS DATA
+===================================================== */
+
+function getPreviousData(currentDate){
+
+let dates=[];
+
+Object.keys(localStorage).forEach(key=>{
+
+if(key.startsWith("hisab_")){
+
+let date=key.substring(6);
+
+if(date<currentDate){
+
+dates.push(date);
+
+}
+
+}
+
+});
+
+if(dates.length===0){
+
+return null;
+
+}
+
+dates.sort();
+
+let previousDate=
+dates[dates.length-1];
+
+let raw=
+localStorage.getItem("hisab_"+previousDate);
+
+if(!raw) return null;
+
+try{
+
+return JSON.parse(raw);
+
+}catch(e){
+
+return null;
+
+}
+
+}
+
+
+/* =====================================================
+   HISTORY
+===================================================== */
+
+function loadHistory(){
+
+let history=
+document.getElementById("history");
+
+history.innerHTML="";
+
+let dates=[];
+
+Object.keys(localStorage).forEach(key=>{
+
+if(key.startsWith("hisab_")){
+
+dates.push(key.substring(6));
+
+}
+
+});
+
+dates.sort().reverse();
+
+
+dates.forEach(date=>{
+
+let div=
+document.createElement("div");
+
+div.className="history-item";
+
+div.innerText=
+"📅 "+date;
+
+div.onclick=function(){
+
+loadDay(date);
+
+};
+
+history.appendChild(div);
+
+});
+
+}
+
+
+/* =====================================================
+   LOAD DAY
+===================================================== */
+
+function loadDay(date){
+
+let raw=
+localStorage.getItem("hisab_"+date);
+
+if(!raw){
+
+alert("এই দিনের হিসাব পাওয়া যায়নি");
+
+return;
+
+}
+
+let data;
+
+try{
+
+data=JSON.parse(raw);
+
+}catch(e){
+
+alert("এই হিসাবের Data নষ্ট হয়েছে");
+
+return;
+
+}
+
+
+/* INPUT LOAD */
+
+if(data.inputs){
+
+Object.keys(data.inputs).forEach(id=>{
+
+let el=
+document.getElementById(id);
+
+if(el){
+
+el.value=data.inputs[id];
+
+}
+
+});
+
+}
+
+
+/* STOCK LOAD */
+
+if(data.simStock){
+
+simStock=data.simStock;
+
+}
+
+if(data.kitStock){
+
+kitStock=data.kitStock;
+
+}
+
+
+/* পুরোনো format compatibility */
+
+Object.keys(simStock).forEach(type=>{
+
+if(typeof simStock[type]==="number"){
+
+simStock[type]={
+qty:simStock[type],
+value:0
+};
+
+}
+
+});
+
+if(typeof kitStock==="number"){
+
+kitStock={
+qty:kitStock,
+value:0
+};
+
+}
+
+
+/* EXPENSE LOAD */
+
+expenses=
+Array.isArray(data.expenses)
+? data.expenses
+:[];
+
+
+document.getElementById("date").value=
+date;
+
+
+showStock();
+
+showExpense();
+
+hisab();
+
+
+/* Saved profit */
+
+if(data.profitToday!==undefined){
+
+document.getElementById("profitToday").innerText=
+Number(data.profitToday).toFixed(2);
+
+}
+
+if(data.commissionProfit!==undefined){
+
+document.getElementById("commissionProfit").innerText=
+Number(data.commissionProfit).toFixed(2);
+
+}
+
+alert(date+" এর সম্পূর্ণ হিসাব Load হয়েছে");
+
+}
+
+
+/* =====================================================
+   RESET INCOME
+===================================================== */
+
+function resetIncome(){
+
+let ids=[
+
+"cash",
+"bkash",
+"nogod",
+"rocket",
+"gp",
+"airtel",
+"robi",
+"bl",
+"card",
+"baki",
+"commission"
+
+];
+
+ids.forEach(id=>{
+
+let el=document.getElementById(id);
+
+if(el){
+
+el.value="";
+
+}
+
+});
+
+hisab();
+
+}
+
+
+/* =====================================================
+   RESET PERSONAL
+===================================================== */
+
+function resetPersonal(){
+
+document.getElementById("pbkash").value="";
+
+document.getElementById("procket").value="";
+
+hisab();
+
+}
+
+
+/* =====================================================
+   RESET STOCK
+===================================================== */
+
+function resetStock(){
+
+if(!confirm("Stock-এর সব হিসাব Reset করবেন?")){
+
+return;
+
+}
+
+simStock={
+
+Robi:{qty:0,value:0},
+
+Airtel:{qty:0,value:0},
+
+Grameen:{qty:0,value:0},
+
+Banglalink:{qty:0,value:0}
+
+};
+
+kitStock={
+
+qty:0,
+
+value:0
+
+};
+
+document.getElementById("stockqty").value="";
+
+document.getElementById("simprice").value="";
+
+document.getElementById("kitqty").value="";
+
+document.getElementById("kitprice").value="";
+
+showStock();
+
+hisab();
+
+}
+
+
+/* =====================================================
+   RESET EXPENSE
+===================================================== */
+
+function resetExpense(){
+
+if(!confirm("এই দিনের সব খরচ মুছে ফেলবেন?")){
+
+return;
+
+}
+
+expenses=[];
+
+showExpense();
+
+hisab();
+
+}
+
+
+/* =====================================================
+   RESET CARD CALCULATOR
+===================================================== */
+
+function resetCardCalc(){
+
+["card20","card30","card40","card50"].forEach(id=>{
+
+document.getElementById(id).value=0;
+
+});
+
+cardCalc();
+
+}
+
+
+/* =====================================================
+   RESET MONEY CALCULATOR
+===================================================== */
+
+function resetMoneyCalc(){
+
+[
+
+"money2",
+"money5",
+"money10",
+"money20",
+"money50",
+"money100",
+"money200",
+"money500",
+"money1000"
+
+].forEach(id=>{
+
+document.getElementById(id).value=0;
+
+});
+
+moneyCalc();
+
+}
+
+
+/* =====================================================
+   RESET HISTORY
+===================================================== */
+
+function resetHistory(){
+
+if(!confirm("সব Daily History মুছে ফেলবেন?")){
+
+return;
+
+}
+
+Object.keys(localStorage).forEach(key=>{
+
+if(key.startsWith("hisab_")){
+
+localStorage.removeItem(key);
+
+}
+
+});
+
+document.getElementById("history").innerHTML="";
+
+alert("Daily History মুছে ফেলা হয়েছে");
+
+}
+
+
+/* =====================================================
+   RESET ALL
+===================================================== */
+
+function resetAll(){
+
+if(!confirm("বর্তমান হিসাবের সব তথ্য Reset করবেন?")){
+
+return;
+
+}
+
+
+/* Main inputs */
+
+document.querySelectorAll(
+".box:not(.history-box) input"
+).forEach(input=>{
+
+/*
+Calculator-ও Reset All-এর সময়
+Reset হবে।
+কিন্তু History delete হবে না।
+*/
+
+input.value="";
+
+});
+
+
+/* Select */
+
+document.getElementById("simtype").selectedIndex=0;
+
+
+/* Stock */
+
+simStock={
+
+Robi:{qty:0,value:0},
+
+Airtel:{qty:0,value:0},
+
+Grameen:{qty:0,value:0},
+
+Banglalink:{qty:0,value:0}
+
+};
+
+kitStock={
+
+qty:0,
+
+value:0
+
+};
+
+
+/* Expense */
+
+expenses=[];
+
+
+/* Outputs */
+
+document.getElementById("profitToday").innerText="0";
+
+document.getElementById("commissionProfit").innerText="0";
+
+
+showStock();
+
+showExpense();
+
+hisab();
+
+cardCalc();
+
+moneyCalc();
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+function printPage(){
+
+hisab();
+
+window.print();
+
+}
+
+
+/* =====================================================
+   SHARE
+===================================================== */
+
+function shareHisab(){
+
+hisab();
+
+let date=
+document.getElementById("date").value||"-";
+
+
+/* INCOME */
+
+let cash=val("cash");
+let bkash=val("bkash");
+let nogod=val("nogod");
+let rocket=val("rocket");
+let gp=val("gp");
+let airtel=val("airtel");
+let robi=val("robi");
+let bl=val("bl");
+let card=val("card");
+let baki=val("baki");
+
+let mot=
+document.getElementById("mot").innerText;
+
+let commission=
+val("commission");
+
+let incomeTotal=
+document.getElementById("incomeTotal").innerText;
+
+
+/* PERSONAL */
+
+let pbkash=val("pbkash");
+let procket=val("procket");
+
+let personalTotal=
+document.getElementById("personalTotal").innerText;
+
+let charge=
+document.getElementById("charge").innerText;
+
+let personalRemain=
+document.getElementById("personalRemain").innerText;
+
+
+/* STOCK */
+
+let robiSim=
+document.getElementById("robiSim").innerText;
+
+let airtelSim=
+document.getElementById("airtelSim").innerText;
+
+let gpSim=
+document.getElementById("gpSim").innerText;
+
+let blSim=
+document.getElementById("blSim").innerText;
+
+let kitStockQty=
+document.getElementById("kitStock").innerText;
+
+let stockValue=
+document.getElementById("stockValue").innerText;
+
+
+/* EXPENSE */
+
+let expenseTotal=
+document.getElementById("expenseTotal").innerText;
+
+
+/* PROFIT */
+
+let joma=
+document.getElementById("joma").innerText;
+
+let profitToday=
+document.getElementById("profitToday").innerText;
+
+let commissionProfit=
+document.getElementById("commissionProfit").innerText;
+
+
+/*
+IMPORTANT:
+Calculator / Card Calculator
+Share হবে না।
+*/
+
+
+let msg=
+
+"📒 ART COMPUTER\n"+
+"দৈনিক হিসাব রিপোর্ট\n"+
+"━━━━━━━━━━━━━━━━\n"+
+"📅 তারিখ: "+date+"\n\n"+
+
+"💰 আয়\n"+
+"ক্যাশ: "+cash+" টাকা\n"+
+"বিকাশ: "+bkash+" টাকা\n"+
+"নগদ: "+nogod+" টাকা\n"+
+"রকেট: "+rocket+" টাকা\n"+
+"গ্রামীণফোন: "+gp+" টাকা\n"+
+"এয়ারটেল: "+airtel+" টাকা\n"+
+"রবি: "+robi+" টাকা\n"+
+"বাংলালিংক: "+bl+" টাকা\n"+
+"মোট কার্ড: "+card+" টাকা\n"+
+"বাকি: "+baki+" টাকা\n\n"+
+
+"মোট আয়: "+mot+" টাকা\n"+
+"কমিশন: "+commission+" টাকা\n"+
+"কমিশন বাদে: "+incomeTotal+" টাকা\n\n"+
+
+"👤 Personal\n"+
+"Personal bKash: "+pbkash+" টাকা\n"+
+"Personal Rocket: "+procket+" টাকা\n"+
+"মোট Personal: "+personalTotal+" টাকা\n"+
+"চার্জ: "+charge+" টাকা\n"+
+"অবশিষ্ট: "+personalRemain+" টাকা\n\n"+
+
+"📦 SIM & KIT Stock\n"+
+"Robi SIM: "+robiSim+" টি\n"+
+"Airtel SIM: "+airtelSim+" টি\n"+
+"Grameen SIM: "+gpSim+" টি\n"+
+"Banglalink SIM: "+blSim+" টি\n"+
+"SIM KIT: "+kitStockQty+" টি\n"+
+"বর্তমান Stock Value: "+stockValue+" টাকা\n\n"+
+
+"💸 খরচ\n"+
+"মোট খরচ: "+expenseTotal+" টাকা\n"+
+"(খরচ জমা থেকে বাদ দেওয়া হয়নি)\n\n"+
+
+"🏦 চূড়ান্ত জমা: "+joma+" টাকা\n\n"+
+
+"📈 আজকের Profit: "+profitToday+" টাকা\n"+
+"📊 Commission Profit: "+commissionProfit+" টাকা\n"+
+
+"━━━━━━━━━━━━━━━━\n"+
+"✔ Generated by ART COMPUTER";
+
+
+/*
+WhatsApp sharing
+*/
+
+let encoded=
+encodeURIComponent(msg);
+
+let whatsappURL=
+"https://wa.me/?text="+encoded;
+
+
+/*
+Mobile + Desktop দুই জায়গাতেই কাজ করার চেষ্টা।
+*/
+
+try{
+
+window.open(
+whatsappURL,
+"_blank"
+);
+
+}catch(e){
+
+window.location.href=
+whatsappURL;
+
+}
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+window.addEventListener("load",function(){
+
+loadHistory();
+
+showStock();
+
+showExpense();
+
+hisab();
+
+cardCalc();
+
+moneyCalc();
+
+});
+
+</script>
+
+</body>
+</html>
